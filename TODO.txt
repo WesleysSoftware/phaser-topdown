@@ -1,0 +1,7 @@
+SUMMARY:
+
+Game where it spawns monster, you have to run around a group of them
+to capture them. During this time you are creating a trail
+as you complete the trail you will lock them in place.
+
+you then "detonate" them to kill them and get powerups
