@@ -21,10 +21,11 @@ const config = {
 
 
 const game = new Phaser.Game(config);
-let wallCount = 10
 
 
 
+// variables
+let wallCount = 1000
 function preload() {
     // Load the sprite sheet (provide correct dimensions and frame size)
     this.load.spritesheet('character', '/link.jpg', {
@@ -32,13 +33,17 @@ function preload() {
         frameHeight: 35  // Change this to your frame height
     });
     this.load.image('bomb', '/bomb.png')
+    this.load.image('wall', '/wall.png')
 }
 
 let textContent = 'Zombie Survival 0.0.4'
 
+
+
 function create() {
     // Create a sprite using the sprite sheet
     character = this.physics.add.sprite(400, 300, 'character')
+
     // this.character = this.physics.add.sprite(400, 300, 'character', 0);
     character.setCollideWorldBounds(true)
     // Set initial velocity and collision bounds
@@ -47,15 +52,27 @@ function create() {
     // Set up controls
     this.cursors = this.input.keyboard.createCursorKeys();
    
+    
     //walls
     walls = this.physics.add.staticGroup()
+
+    let wallCountDisplay = this.add.text(0, 20, "Walls: " + wallCount)
     
     //collisions
+    // this.physics.add.collider(character, walls)
     this.physics.add.collider(character, walls)
-    this.physics.add.collider(walls, character)
+
+    const collisionDetection = () => {
+        console.log("we hit a wall")
+    }
+
+    this.physics.add.collider(character, walls, collisionDetection, null, this)
+
 }
 
 function update() {
+
+
 
     character.setVelocityY(0)
     character.setVelocityX(0)
@@ -63,26 +80,31 @@ function update() {
     let topText = this.add.text(0, 0, textContent)
     let pX = character.x
     let pY = character.y
+    let playerSpeed = 300
     // Handle movement
     if (this.cursors.left.isDown) {
-        character.setVelocityX(-160);
+        character.setVelocityX(-playerSpeed);
     } 
     else if (this.cursors.right.isDown) {
-        character.setVelocityX(160);
+        character.setVelocityX(playerSpeed);
     } else if (this.cursors.up.isDown) {
-        character.setVelocityY(-160);
+        character.setVelocityY(-playerSpeed);
     } else if (this.cursors.down.isDown) {
-        character.setVelocityY(160);
+        character.setVelocityY(playerSpeed);
     } 
 
     const setWalls = () => {
         console.log("We set a wall. we have " + wallCount + " walls left")
-        walls.create(pX, pY).setScale(0.5)
+        
+        walls.create(pX, pY, 'wall').setScale(1)
         wallCount--;
     }
 
     if(this.cursors.space.isDown && wallCount > 0 ) {
        setWalls()
     }
+
+
+
 
 }

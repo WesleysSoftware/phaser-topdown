@@ -5,3 +5,21 @@ to capture them. During this time you are creating a trail
 as you complete the trail you will lock them in place.
 
 you then "detonate" them to kill them and get powerups
+
+
+
+[ ]Add image for walls
+[ ]Allow building a wall only every X amount of seconds
+[X]Make sure walls cannot be placed when there are no materials
+[ ]Add zombies that walk towards the character.
+[ ]Add melee weapons
+[ ]Add ranged weapons
+[ ]Add turrets
+[ ]Add degrade functionality (so we have to keep building)
+[ ]Add rebuild functionality 
+[ ]Add skins
+[ ]Add other maps
+[ ]Create a larger world map that we can travel around in
+[ ]Create Multiplayer (sockets.io)
+[ ]
+[ ]
