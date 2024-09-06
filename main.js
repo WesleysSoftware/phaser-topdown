@@ -80,7 +80,7 @@ function update() {
     let topText = this.add.text(0, 0, textContent)
     let pX = character.x
     let pY = character.y
-    let playerSpeed = 300
+    let playerSpeed = 200
     // Handle movement
     if (this.cursors.left.isDown) {
         character.setVelocityX(-playerSpeed);
@@ -96,7 +96,7 @@ function update() {
     const setWalls = () => {
         console.log("We set a wall. we have " + wallCount + " walls left")
         
-        walls.create(pX, pY, 'wall').setScale(1)
+        walls.create(pX, pY, 'wall').setScale(.25).setSize(25, 25).setOffset(43, 45)
         wallCount--;
     }
 
