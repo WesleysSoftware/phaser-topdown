@@ -23,3 +23,8 @@ you then "detonate" them to kill them and get powerups
 [ ]Create Multiplayer (sockets.io)
 [ ]
 [ ]
+
+
+
+v0.0.5
+changed hit boxes and sprite size of walls. Happy with this.

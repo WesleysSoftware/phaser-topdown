@@ -19,13 +19,22 @@ const config = {
 };
 
 
-
+//intializing game
 const game = new Phaser.Game(config);
+
+
 
 
 
 // variables
 let wallCount = 1000
+
+
+
+
+
+
+
 function preload() {
     // Load the sprite sheet (provide correct dimensions and frame size)
     this.load.spritesheet('character', '/link.jpg', {
@@ -36,52 +45,34 @@ function preload() {
     this.load.image('wall', '/wall.png')
 }
 
-let textContent = 'Zombie Survival 0.0.4'
-
-
-
 function create() {
-    // Create a sprite using the sprite sheet
+    // Create a sprite using the sprite sheet, setup collides with window, create cursor keys for input
     character = this.physics.add.sprite(400, 300, 'character')
-
-    // this.character = this.physics.add.sprite(400, 300, 'character', 0);
     character.setCollideWorldBounds(true)
-    // Set initial velocity and collision bounds
-    character.setVelocity(0);
-    character.setCollideWorldBounds(true);
-    // Set up controls
     this.cursors = this.input.keyboard.createCursorKeys();
    
     
-    //walls
+    //walls creation, adding walls collider, and updating the display on how many we have in our inventory
     walls = this.physics.add.staticGroup()
-
-    let wallCountDisplay = this.add.text(0, 20, "Walls: " + wallCount)
-    
-    //collisions
-    // this.physics.add.collider(character, walls)
     this.physics.add.collider(character, walls)
-
-    const collisionDetection = () => {
-        console.log("we hit a wall")
-    }
-
-    this.physics.add.collider(character, walls, collisionDetection, null, this)
-
+    wallCountDisplay = this.add.text(0, 20, "Walls: " + wallCount)
 }
 
 function update() {
-
-
-
+    //setting velocity to 0,0 so that it is up/down depsplay
     character.setVelocityY(0)
     character.setVelocityX(0)
+    
+    //top-left text display
+    let versionNo = '0.0.6'
+    let topText = this.add.text(0, 0, "Zombie Survival: " + versionNo)
+    
 
-    let topText = this.add.text(0, 0, textContent)
+    //player movement position, speed, and movement handler
     let pX = character.x
     let pY = character.y
     let playerSpeed = 200
-    // Handle movement
+
     if (this.cursors.left.isDown) {
         character.setVelocityX(-playerSpeed);
     } 
@@ -93,18 +84,20 @@ function update() {
         character.setVelocityY(playerSpeed);
     } 
 
+
+
+    //------------------------------------------//
+    //---------------WALL LOGIC-----------------//
+    //------------------------------------------//
     const setWalls = () => {
-        console.log("We set a wall. we have " + wallCount + " walls left")
-        
+        // create a wall on my player's position with a smaller scale and a proper collission box, reduce wall count, then adjust existing HUD
         walls.create(pX, pY, 'wall').setScale(.25).setSize(25, 25).setOffset(43, 45)
         wallCount--;
-    }
+        wallCountDisplay.setText("Walls: " + wallCount);
 
+    }
+    
     if(this.cursors.space.isDown && wallCount > 0 ) {
        setWalls()
     }
-
-
-
-
 }
